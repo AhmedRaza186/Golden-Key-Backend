@@ -1,7 +1,7 @@
 import { Server } from "socket.io";
-import dotenv from 'dotenv'
+// import dotenv from 'dotenv'
 
-dotenv.config()
+// dotenv.config()
 
 
 console.log(process.env.CLIENT_URL);
