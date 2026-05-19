@@ -6,9 +6,15 @@ dotenv.config()
 
 console.log(process.env.CLIENT_URL);
 
+const clientUrl = process.env.CLIENT_URL || "http://localhost:5174";
+const allowedOrigins = [
+  clientUrl,
+  clientUrl.endsWith('/') ? clientUrl.slice(0, -1) : clientUrl + '/'
+];
+
 const io = new Server({
   cors: {
-    origin: process.env.CLIENT_URL || "http://localhost:5174",
+    origin: allowedOrigins,
   },
 });
 

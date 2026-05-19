@@ -10,17 +10,24 @@ import messageRoutes from './routes/messageRoutes.js'
 import dns from 'node:dns' 
 import cookieParser from 'cookie-parser'
 
+dotenv.config()
+
 const app = express()
 
 dns.setServers(['8.8.8.8', '1.1.1.1'])
 
+const clientUrl = process.env.CLIENT_URL || "http://localhost:5174"
+const allowedOrigins = [
+  clientUrl,
+  clientUrl.endsWith('/') ? clientUrl.slice(0, -1) : clientUrl + '/'
+]
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || "http://localhost:5174",
+  origin: allowedOrigins,
   credentials: true
 }));
 app.use(cookieParser())
 app.use(express.json())
-dotenv.config()
 
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
